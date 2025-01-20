@@ -68,13 +68,4 @@ Voici un aperçu du code utilisé pour générer et gérer les QR Codes.
 - `save_qr_code(qr_code, filename)` : Sauvegarde un QR Code généré dans un fichier image.
 - `load_qr_code(filename)` : Charge un QR Code à partir d'un fichier.
 
-### Exemple de code pour générer un QR Code
-
-```python
-import qrcode
-
-def generate_qr_code(data):
-    qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)
-    qr.add_data(data)
-    qr.make(fit=True)
-    return qr.make_image(fill='black', back_color='white')
+**projet sous license MIT**

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        input, button { padding: 10px; margin: 5px; }
+        img { margin-top: 20px; max-width: 200px; }
+        .gallery { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .qr-item { text-align: center; }
+        .qr-item a { display: block; margin-top: 5px; color: blue; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <h1>Générateur de QR Code</h1>
+    <form id="qrForm">
+        <input type="text" id="link" placeholder="Entrez un lien" required>
+        <input type="file" id="image" accept="image/*">
+        <button type="submit">Générer</button>
+    </form>
+    
+    <h2>Galerie des QR Codes</h2>
+    <div id="gallery" class="gallery"></div>
+
+    <script>
+        async function loadGallery() {
+            let response = await fetch("/list");
+            let qrCodes = await response.json();
+            let gallery = document.getElementById("gallery");
+            gallery.innerHTML = "";
+            
+            qrCodes.forEach(qr => {
+                let div = document.createElement("div");
+                div.className = "qr-item";
+                
+                let img = document.createElement("img");
+                img.src = qr.image;
+                img.alt = "QR Code";
+                
+                let link = document.createElement("a");
+                link.href = qr.link;
+                link.textContent = qr.link;
+                link.target = "_blank";
+                
+                div.appendChild(img);
+                div.appendChild(link);
+                gallery.appendChild(div);
+            });
+        }
+
+        document.getElementById("qrForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            
+            let formData = new FormData();
+            formData.append("link", document.getElementById("link").value);
+            let image = document.getElementById("image").files[0];
+            if (image) formData.append("image", image);
+
+            await fetch("/generate", { method: "POST", body: formData });
+            loadGallery();
+        });
+
+        window.onload = loadGallery;
+    </script>
+</body>
+</html>

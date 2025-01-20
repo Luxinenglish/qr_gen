@@ -1,0 +1,7 @@
+qr_1.png,https://portfolio.pixelserver.fr
+qr_3.png,https://mdl.pixelserver.fr
+qr_4.png,https://pixelserver.fr
+qr_5.png,https://sukyan.pixelserver.fr
+qr_6.png,https://lamache.org
+qr_8.png,https://gmail.com
+qr_9.png,https://ruby69.fr
